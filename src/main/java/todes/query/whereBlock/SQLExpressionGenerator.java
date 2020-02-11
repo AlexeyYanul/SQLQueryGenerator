@@ -36,6 +36,8 @@ public class SQLExpressionGenerator implements ExpressionGenerator<SQLExpression
         String leftExpLine = leftExp.getLine();
         String rightExpLine = rightExp.getLine();
         generator.line.append(andOperationCreator.create(leftExpLine, rightExpLine));
+        generator.params.addAll(leftExp.getParams());
+        generator.params.addAll(rightExp.getParams());
         return generator;
     }
 
@@ -45,12 +47,15 @@ public class SQLExpressionGenerator implements ExpressionGenerator<SQLExpression
         String leftExpLine = leftExp.getLine();
         String rightExpLine = rightExp.getLine();
         generator.line.append(orOperationCreator.create(leftExpLine, rightExpLine));
+        generator.params.addAll(leftExp.getParams());
+        generator.params.addAll(rightExp.getParams());
         return generator;
     }
 
     @Override
     public SQLExpressionGenerator like(SQLParam param) {
         SQLExpressionGenerator generator = new SQLExpressionGenerator();
+        generator.params.add(param);
         generator.line.append(likeExpressionCreator.createExpression(param));
         return generator;
     }
@@ -58,6 +63,7 @@ public class SQLExpressionGenerator implements ExpressionGenerator<SQLExpression
     @Override
     public SQLExpressionGenerator equal(SQLParam param) {
         SQLExpressionGenerator generator = new SQLExpressionGenerator();
+        generator.params.add(param);
         generator.line.append(equalExpressionCreator.createExpression(param));
         return generator;
     }

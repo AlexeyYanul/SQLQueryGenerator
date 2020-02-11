@@ -42,6 +42,7 @@ public class SQLQueryGenerator implements QueryGenerator<SQLQueryGenerator> {
     @Override
     public SQLQueryGenerator where(ExpressionGenerator expressionGenerator) {
         queryInfo.append(whereClauseCreator.create(expressionGenerator));
+        queryInfo.addQueryParameters(expressionGenerator.getParams());
         return this;
     }
 
