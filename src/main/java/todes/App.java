@@ -1,43 +1,42 @@
 package todes;
 
-import todes.model.Resume;
+import todes.dao.ExecuteQuery;
 import todes.model.enums.Gender;
-import todes.query.builder.QueryInfo;
 import todes.query.builder.impl.SQLParam;
-import todes.query.builder.impl.SQLQueryGenerator;
-import todes.query.whereBlock.SQLExpressionGenerator;
 
 import java.util.List;
 
 public class App {
 
     public static void main(String[] args) {
+        SQLParam name = new SQLParam();
+        name.setKey("name");
+        name.setValue("Мария");
 
-        SQLParam likeParam = new SQLParam();
-        likeParam.setKey("surname");
-        likeParam.setValue("%ов");
+        SQLParam surname = new SQLParam();
+        surname.setKey("surname");
+        surname.setValue("Морская");
 
-        SQLParam equalParam = new SQLParam();
-        equalParam.setKey("gender");
-        equalParam.setValue(Gender.женщина.toString());
+        SQLParam patronomic = new SQLParam();
+        patronomic.setKey("patronomic");
+        patronomic.setValue("Васильевна");
 
-        SQLParam param3 = new SQLParam();
-        param3.setKey("QQQ");
-        param3.setValue("ZZZ");
+        SQLParam surnameLike = new SQLParam();
+        surnameLike.setKey("surname");
+        surnameLike.setValue("%ов");
 
+        SQLParam gender = new SQLParam();
+        gender.setKey("gender");
+        gender.setValue(Gender.женщина.toString());
 
-        SQLQueryGenerator queryGenerator = new SQLQueryGenerator();
-        SQLExpressionGenerator expGen = new SQLExpressionGenerator();
-        QueryInfo queryInfo =
-                queryGenerator.select()
-                        .from(Resume.class)
-                        .where(expGen.or(expGen.and(expGen.equal(equalParam), expGen.like(likeParam)), expGen.equal(param3)))
-                        .build();
-        String generatedQuery = queryInfo.getQuery();
-        List<SQLParam> queryParameters = queryInfo.getQueryParameters();
-        System.out.println(generatedQuery);
-        System.out.println(queryParameters);
+        ExecuteQuery executeQuery = new ExecuteQuery();
+        List firstTestResult = executeQuery.firstTest(name, surname, patronomic);
+        firstTestResult.forEach(System.out::println);
+
+        List secondTestResult = executeQuery.secondTest(surnameLike, gender);
+        secondTestResult.forEach(System.out::println);
 
 
     }
+
 }

@@ -10,7 +10,7 @@
         <property name="connection.password">postgres</property>
 
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL10Dialect</property>
-        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.show_sql">false</property>
 
         <mapping class="todes.model.Resume"/>
         <mapping class="todes.model.Technology"/>

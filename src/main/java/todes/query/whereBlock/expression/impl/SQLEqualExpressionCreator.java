@@ -12,7 +12,7 @@ public class SQLEqualExpressionCreator extends SQLUnaryExpressionCreator impleme
     @Override
     public String createExpression(SQLParam param) {
         this.param = param;
-        return createExpression(param, operand, false);
+        return createExpression(param, operand, true);
     }
 
     @Override
